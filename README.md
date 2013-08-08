@@ -20,3 +20,10 @@
 4. 加入sitemesh3 jquerymobileUI 完成页面的基础封装
 </pre>
 <br>
+
+<h3>参考的链接有<h3>
+<ul>
+  <li><a href="http://topmanopensource.iteye.com/blog/1449889" target="_blank">Mongo的ORM框架的学习Morphia(十五)Morphia+spring整合</a></li>
+  <li><a href="http://www.blogjava.net/watchzerg/archive/2012/09/21/388291.html" target="_blank">morphia与spring的整合</a></li>
+  <li><a href="http://download.csdn.net/detail/mapeijie888/4221150" target="_blank">Mongo集成Spring 资源</a></li>
+</ul>
