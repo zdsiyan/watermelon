@@ -6,15 +6,35 @@
 	</head>
 	<body>
 		<h2>register</h2>
-		<form action="user/save" method="post">
+		<form action="user/register" method="post">
 			<p>username:<input type="text" id="userName" name="userName"/></p>
 			<p>password:<input type="password" id="password" name="password"/></p>
 			<p>nickname:<input type="text" id="nickName" name="nickName"/></p>
 			<p>email:<input type="text" id="validationEmail" name="validationEmail"/></p>
 			<p><input type="submit" text="submit" value="submit"/></p>
 		</form>
+		<br>
+		<h2>login</h2>
+		<form action="user/login" method="post">
+			<p>username:<input type="text" id="userName" name="userName"/></p>
+			<p>password:<input type="password" id="password" name="password"/></p>
+			<p><input type="submit" text="submit" value="submit"/></p>
+		</form>
+		<br>
+		<h2><a href="user/logout">logout</a></h2>
+		<br>		
+		<h2>get</h2>
+		<form action="user/get" method="post">
+			<p>username:<input type="text" id="userName" name="userName"/></p>
+			<p><input type="submit" text="submit" value="submit"/></p>
+		</form>
+		<br>		
+		<h2>delete</h2>
+		<form action="user/delete" method="post">
+			<p>password:<input type="password" id="password" name="password"/></p>
+			<p><input type="submit" text="submit" value="submit"/></p>
+		</form>
 <script type="text/javascript">
-
 $(document).ready(function(){
 	
 });	
