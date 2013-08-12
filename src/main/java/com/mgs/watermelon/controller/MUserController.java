@@ -3,6 +3,7 @@ package com.mgs.watermelon.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +33,10 @@ public class MUserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/get")
-	public ResultVO<MUser> get(String username){
+	public ResultVO<MUser> get(String userName){
 		MUser result=null;
 		try{
-			Query<MUser> query = mUserService.createQuery().filter("userName",username);
+			Query<MUser> query = mUserService.createQuery().filter("userName",userName);
 			result=mUserService.findOne(query);
 		}catch(Exception e){
 			logger.error(e.getMessage());
@@ -58,10 +59,10 @@ public class MUserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/register")
-	public ResultVO<MUser> register(HttpSession session, String username, String password, String nickname, String email){
+	public ResultVO<MUser> register(HttpSession session, MUser param){
 		MUser result=null;
 		try{
-			result=mUserService.register(username, password, nickname, email);
+			result=mUserService.register(param);
 		}catch(Exception e){
 			logger.error(e.getMessage());
 			return new ResultVO<MUser>(SysDefinition.CODE_ERROR,null,null);
@@ -130,24 +131,60 @@ public class MUserController {
 			logger.error(e.getMessage());
 			return new ResultVO<MUser>(SysDefinition.CODE_ERROR,null,null);
 		}
-		return new ResultVO<MUser>(SysDefinition.CODE_NODATA,null,null);
+		return new ResultVO<MUser>(SysDefinition.CODE_SUCCESS,null,null);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/update/signature")
-	public ResultVO<MUser> signature(HttpSession session, String content){
+	public ResultVO<String> signature(HttpSession session, String content){
 		MUser result= (MUser)session.getAttribute(SysDefinition.USER_SESSION_KEY);
 		if(result==null){
-			return new ResultVO<MUser>(SysDefinition.CODE_NODATA,null,null);
+			return new ResultVO<String>(SysDefinition.CODE_NODATA,null,null);
 		}
 		try{
-			result=mUserService.signature(result, content);
+			mUserService.signature(result, content);
 			session.setAttribute(SysDefinition.USER_SESSION_KEY, result);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResultVO<MUser>(SysDefinition.CODE_ERROR,null,null);
+			return new ResultVO<String>(SysDefinition.CODE_ERROR,null,null);
 		}
-		return new ResultVO<MUser>(SysDefinition.CODE_NODATA,null,null);
+		return new ResultVO<String>(SysDefinition.CODE_SUCCESS,null,content);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/follow")
+	public ResultVO<String> follow(HttpSession session, String name){
+		MUser result= (MUser)session.getAttribute(SysDefinition.USER_SESSION_KEY);
+		if(result==null){
+			return new ResultVO<String>(SysDefinition.CODE_NODATA,null,null);
+		}
+		try{
+			if(mUserService.follow(result, name)){
+				return new ResultVO<String>(SysDefinition.CODE_SUCCESS,null,null);
+			}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+			return new ResultVO<String>(SysDefinition.CODE_ERROR,null,null);
+		}
+		return new ResultVO<String>(SysDefinition.CODE_NODATA,null,null);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/unfollow")
+	public ResultVO<String> unfollow(HttpSession session, String name){
+		MUser result= (MUser)session.getAttribute(SysDefinition.USER_SESSION_KEY);
+		if(result==null){
+			return new ResultVO<String>(SysDefinition.CODE_NODATA,null,null);
+		}
+		try{
+			if(mUserService.unfollow(result, name)){
+				return new ResultVO<String>(SysDefinition.CODE_SUCCESS,null,null);
+			}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+			return new ResultVO<String>(SysDefinition.CODE_ERROR,null,null);
+		}
+		return new ResultVO<String>(SysDefinition.CODE_NODATA,null,null);
 	}
 	
 
