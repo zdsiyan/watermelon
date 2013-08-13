@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Test Page</title>
+		<#include "/common/meta.html"/>
+	</head>
+	<body>
+		<h2>post twibo</h2>
+		<form action="twibo/post" method="post">
+			Content:
+			<textarea id="content" name="content" rows="3" cols="20">
+			</textarea>
+			<p><input type="submit" text="submit" value="submit"/></p>
+		</form>
+		<br>
+		<h2>objectid get</h2>
+		<form action="twibo/get" method="post">
+			<p>ObjectId:<input type="text" id="oid" name="oid"/></p>
+			<p><input type="submit" text="submit" value="submit"/></p>
+		</form>
+		<h2>twibo list</h2>
+		<form action="twibo/list" method="post">
+			<p>offset:<input type="text" id="offset" name="offset"/></p>
+			<p>length:<input type="text" id="length" name="length"/></p>
+			<p><input type="submit" text="submit" value="submit"/></p>
+		</form>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+});	
+</script>
+	</body>
+</html>

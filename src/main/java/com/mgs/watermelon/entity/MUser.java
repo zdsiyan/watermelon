@@ -8,7 +8,9 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Indexed;
 import com.google.code.morphia.annotations.Reference;
+import com.google.code.morphia.utils.IndexDirection;
 
 /**
  * @author bruce
@@ -22,12 +24,16 @@ public class MUser extends BaseEntity implements Serializable{
 	private static final long serialVersionUID = -4000181846290366322L;
 	
 	//用户名
+	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
 	private String userName;
 	//昵称
+	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
 	private String nickName;
 	//验证邮箱
+	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
 	private String validationEmail;
 	//密码
+	@JsonIgnore
 	private String password;
 	
 	//引用 关注人

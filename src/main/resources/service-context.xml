@@ -121,5 +121,9 @@
 		<constructor-arg ref="datastore" index="0"/>
 	</bean>
 	
+	<bean id="twiboDAO" class="com.mgs.watermelon.dao.TwiboDAO">
+		<constructor-arg ref="datastore" index="0"/>
+	</bean>
+	
 	
 </beans>

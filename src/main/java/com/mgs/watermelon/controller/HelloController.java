@@ -20,4 +20,10 @@ public class HelloController {
 		System.out.println("index");
 		return "/index";
 	}
+	
+	@RequestMapping("/twibo")
+	public String twibo(){
+		System.out.println("twibo");
+		return "/twibo";
+	}
 }
