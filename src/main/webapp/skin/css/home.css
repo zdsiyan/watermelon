@@ -50,3 +50,7 @@ body {
 code {
   font-size: 80%;
 }
+
+.name-header{
+	text-shadow: 0 1px 1px #123;
+}

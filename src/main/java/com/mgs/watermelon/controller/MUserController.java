@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.morphia.query.Query;
 import com.mgs.watermelon.entity.MUser;
@@ -56,21 +57,20 @@ public class MUserController {
 	 * @param email
 	 * @return
 	 */
-	@ResponseBody
 	@RequestMapping(value="/register")
-	public ResultVO<MUser> register(HttpSession session, MUser param){
+	public ModelAndView register(HttpSession session, MUser param){
 		MUser result=null;
 		try{
 			result=mUserService.register(param);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResultVO<MUser>(SysDefinition.CODE_ERROR,null,null);
+			return new ModelAndView("redirect:/signin");
 		}
 		if(result!=null){
 			session.setAttribute(SysDefinition.USER_SESSION_KEY, result);
-			return new ResultVO<MUser>(SysDefinition.CODE_SUCCESS,null,result);
+			return new ModelAndView("redirect:/home");
 		}else{
-			return new ResultVO<MUser>(SysDefinition.CODE_NODATA,null,null);
+			return new ModelAndView("redirect:/signin");
 		}
 	}
 	
@@ -80,21 +80,20 @@ public class MUserController {
 	 * @param param
 	 * @return
 	 */
-	@ResponseBody
 	@RequestMapping(value="/login")
-	public ResultVO<MUser> login(HttpSession session, MUser param){
+	public ModelAndView login(HttpSession session, MUser param){
 		MUser result=null;
 		try{
 			result=mUserService.login(param);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResultVO<MUser>(SysDefinition.CODE_ERROR,null,null);
+			return new ModelAndView("redirect:/signin");
 		}
 		if(result!=null){
 			session.setAttribute(SysDefinition.USER_SESSION_KEY, result);
-			return new ResultVO<MUser>(SysDefinition.CODE_SUCCESS,null,result);
+			return new ModelAndView("redirect:/home");
 		}else{
-			return new ResultVO<MUser>(SysDefinition.CODE_NODATA,null,null);
+			return new ModelAndView("redirect:/signin");
 		}
 	}
 	
