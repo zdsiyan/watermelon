@@ -32,8 +32,17 @@
 	<!-- 当请求应用程序首页时，将执行/hello请求，还可以设定成redirect -->
 	<!-- <mvc:view-controller path="/" view-name="forward:/hello" /> -->
 
+
 	<!-- 注解 -->
 	<mvc:annotation-driven />
+	
+		
+	 <mvc:interceptors>  
+        <mvc:interceptor>  
+            <mvc:mapping path="/home"/>
+            <bean class="com.mgs.watermelon.interceptor.UserInterceptor"></bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors>
 	
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">

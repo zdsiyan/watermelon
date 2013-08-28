@@ -1,5 +1,7 @@
 package com.mgs.watermelon.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -58,7 +60,7 @@ public class MUserController {
 	 * @return
 	 */
 	@RequestMapping(value="/register")
-	public ModelAndView register(HttpSession session, MUser param){
+	public ModelAndView register(HttpSession session, HttpServletResponse response, MUser param){
 		MUser result=null;
 		try{
 			result=mUserService.register(param);
@@ -68,6 +70,7 @@ public class MUserController {
 		}
 		if(result!=null){
 			session.setAttribute(SysDefinition.USER_SESSION_KEY, result);
+			saveCookie(session, result, response);
 			return new ModelAndView("redirect:/home");
 		}else{
 			return new ModelAndView("redirect:/signin");
@@ -81,7 +84,7 @@ public class MUserController {
 	 * @return
 	 */
 	@RequestMapping(value="/login")
-	public ModelAndView login(HttpSession session, MUser param){
+	public ModelAndView login(HttpSession session, HttpServletResponse response, MUser param){
 		MUser result=null;
 		try{
 			result=mUserService.login(param);
@@ -91,10 +94,24 @@ public class MUserController {
 		}
 		if(result!=null){
 			session.setAttribute(SysDefinition.USER_SESSION_KEY, result);
+			saveCookie(session, result, response);
 			return new ModelAndView("redirect:/home");
 		}else{
 			return new ModelAndView("redirect:/signin");
 		}
+	}
+	
+	private void saveCookie(HttpSession session, MUser muser, HttpServletResponse response){
+		Cookie sessionCookie = new Cookie(SysDefinition.COOKIE_SESSIONID_KEY, session.getId());
+		sessionCookie.setMaxAge(3600);
+		sessionCookie.setPath("/");		
+		response.addCookie(sessionCookie);
+		
+		Cookie loginidCookie = new Cookie(SysDefinition.COOKIE_LOGINID_KEY, muser.getUserName());
+		//30*24*60*60
+		loginidCookie.setMaxAge(2592000);
+		loginidCookie.setPath("/");		
+		response.addCookie(loginidCookie);
 	}
 	
 	/**

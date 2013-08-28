@@ -49,12 +49,44 @@
 
       <!-- Begin page content -->
       <div class="container">
-        <div class="page-header">
-          <h1>欢迎, <label class="name-header">${user.nickName}</label></h1>
-        </div>
-        <p class="lead">大西瓜开源社交, 欢迎热爱开源的开发人员加入</p>
-        <p>开发中...</p>
-      </div>
+      	<div class="row">
+      		<!-- start home zone -->
+      		<div class="col-sm-4">
+      			<div class="list-group">
+      				<a href="#" class="list-group-item active">
+		              <h4 class="list-group-item-heading">${user.nickName}</h4>
+		              <p class="list-group-item-text">首页</p>
+		            </a>
+		            <a href="#" class="list-group-item">
+		              <h4 class="list-group-item-heading">关注</h4>
+		              <p class="list-group-item-text"></p>
+		            </a>
+		            <a href="#" class="list-group-item">
+		              <h4 class="list-group-item-heading">粉丝</h4>
+		              <p class="list-group-item-text"></p>
+		            </a>
+		            <a href="#" class="list-group-item">
+		              <h4 class="list-group-item-heading">微博</h4>
+		              <p class="list-group-item-text"></p>
+		            </a>
+      			</div>
+      		</div><!-- end of home zone -->
+	        <div class="col-sm-8">
+	        	<div class="panel panel-primary">
+		            <div class="panel-heading">
+		              <h3 class="panel-title">Panel title</h3>
+		            </div>
+		            <div class="panel-body">
+		              <textarea rows="8" width="100%"></textarea>
+		              
+		              <button type="button" class="btn btn-lg btn-primary btn-block" style="padding:10px 30px 10px 30px;">发布</button>
+		            </div>
+		         </div>
+	        </div>
+	        <p class="lead">大西瓜开源社交, 欢迎热爱开源的开发人员加入</p>
+	        <p>开发中...</p>
+        </div><!-- end of row -->
+      </div><!-- end of container -->
     </div>
 
     <div id="footer">

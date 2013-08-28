@@ -19,7 +19,6 @@
   <body>
 
     <div class="container">
-
       <form action="user/login" method="post" class="form-signin">
         <h2 class="form-signin-heading">登陆</h2>
         <input id="userName" name="userName" type="text" class="form-control" placeholder="用户名" autofocus>
@@ -33,9 +32,16 @@
 
     </div> <!-- /container -->
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+<script src="skin/js/jquery.js"></script>
+<script src="skin/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//cookie 记住userid, 但不保存密码
+$(document).ready(function(){
+	var loginid=$.cookie('LOGINID');
+	if(loginid){
+		$("#userName").val(loginid);
+	}
+});	
+</script>
   </body>
 </html>
