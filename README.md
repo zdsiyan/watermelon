@@ -1,6 +1,7 @@
-<h1>watermelon</h1>
-<div>base on maven+spring3+springmvc+mongodb+json+morphia framework</div>
+<h1>Watermelon开源项目</h1>
+<div>基于  maven + spring3 + spring mvc + mongodb + json + morphia 框架</div>
 
+<h1>顺便诚招共同开发</h1>
 
 <h2>搜集网上的一些框架整理的工程, 目标如下</h2>
 
