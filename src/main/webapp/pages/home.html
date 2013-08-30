@@ -20,6 +20,7 @@
       <script src="../../assets/js/html5shiv.js"></script>
       <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
+    <#assign ctx=(rc.getContextPath())!''>
   </head>
 
   <body>
@@ -41,7 +42,7 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">首页</a></li>
-              <li><a href="#">写个啥</a></li>
+              <li><a href="#"><i class="icon-tag">待定</i></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -51,7 +52,7 @@
       <div class="container">
       	<div class="row">
       		<!-- start home zone -->
-      		<div class="col-sm-4">
+      		<div class="col-lg-2">
       			<div class="list-group">
       				<a href="#" class="list-group-item active">
 		              <h4 class="list-group-item-heading">${user.nickName}</h4>
@@ -59,32 +60,39 @@
 		            </a>
 		            <a href="#" class="list-group-item">
 		              <h4 class="list-group-item-heading">关注</h4>
-		              <p class="list-group-item-text"></p>
+		              <p class="list-group-item-text">${user.followsSize}</p>
 		            </a>
 		            <a href="#" class="list-group-item">
 		              <h4 class="list-group-item-heading">粉丝</h4>
-		              <p class="list-group-item-text"></p>
+		              <p class="list-group-item-text">${user.fansSize}</p>
 		            </a>
 		            <a href="#" class="list-group-item">
 		              <h4 class="list-group-item-heading">微博</h4>
-		              <p class="list-group-item-text"></p>
+		              <p class="list-group-item-text">0</p>
 		            </a>
       			</div>
       		</div><!-- end of home zone -->
-	        <div class="col-sm-8">
-	        	<div class="panel panel-primary">
-		            <div class="panel-heading">
-		              <h3 class="panel-title">Panel title</h3>
-		            </div>
-		            <div class="panel-body">
-		              <textarea rows="8" width="100%"></textarea>
-		              
-		              <button type="button" class="btn btn-lg btn-primary btn-block" style="padding:10px 30px 10px 30px;">发布</button>
-		            </div>
-		         </div>
+	        <div class="col-lg-6">
+	        	<p>
+	        		<textarea id="twibo" rows="3" cols="80" maxlength="200"></textarea>
+	        	</p>
+	        	<p>
+	        		<ul class="list-inline">
+	        			<li style="margin:10px;">#</li><li style="margin:10px;">#</li><li style="margin:10px;">#</li>
+	        			<li><button id="sendTwibo" type="button" class="btn btn-lg btn-primary btn-block" style="padding:10px 30px 10px 30px;">发布</button></li>
+	        		</ul>
+	        	</p>
+	        	<hr>
+	        	<p class="text-center">
+	        		大西瓜开源社交, 欢迎热爱开源的开发人员加入
+	        	</p>
+	        	<div id="twibo-pool">
+	        	</div>
+	        	<p>开发中...</p>
 	        </div>
-	        <p class="lead">大西瓜开源社交, 欢迎热爱开源的开发人员加入</p>
-	        <p>开发中...</p>
+	        <div class="col-lg-4">
+	        </div>
+	       
         </div><!-- end of row -->
       </div><!-- end of container -->
     </div>
@@ -100,5 +108,36 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="skin/js/jquery.js"></script>
     <script src="skin/js/bootstrap.min.js"></script>
+    <script src="skin/js/bootstrap-maxlength.min.js"></script>
+<script type="text/javascript">
+//cookie 记住userid, 但不保存密码
+$(document).ready(function(){
+	$("#twibo").maxlength();
+	$("#sendTwibo").click(sendTwibo);
+	getTwibo();
+});	
+
+
+function sendTwibo(){
+	$.post("${ctx}/twibo/post",{content:$("#twibo").val()},function(data){
+		//发送成功
+		if(data && data.status==10000){
+			$("#twibo").val("");
+		}
+	});
+}
+
+function getTwibo(){
+	//默认显示20条
+	$.post("${ctx}/twibo/list",{offset:0,length:20},function(data){
+		if(data && data.status==10000){
+			var list=data.result;
+			for(var i=0,len=list.length;i<len;i++){
+				$("#twibo-pool").append("<p>"+list[i].user.nickName+" 曰:"+list[i].content+" 时间:"+list[i].timestamp+"</p>");
+			}
+		}
+	});
+}
+</script>
   </body>
 </html>

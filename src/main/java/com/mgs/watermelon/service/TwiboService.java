@@ -42,7 +42,7 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 			lists.add(u);
 		}
 		Query<Twibo> query = baseDao.createQuery();
-		query.filter("user in ", lists).offset(offset).limit(length);
+		query.filter("user in ", lists).offset(offset).limit(length).order("-timestamp");
 		QueryResults<Twibo> result = baseDao.find(query);
 		return result.asList();
 	}
