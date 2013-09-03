@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="shortcut icon" href="../../assets/ico/favicon.png"> -->
+
+    <title>粉丝 - 大西瓜</title>
+
+    <#assign ctx=(rc.getContextPath())!''>
+    <!-- Bootstrap core CSS -->
+    <link href="${ctx}/skin/css/bootstrap.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="${ctx}/skin/css/home.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+     <!-- Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Fixed navbar -->
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">LOGO</a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="${ctx}/home">首页</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+
+      <!-- Begin page content -->
+      <div class="container">
+      	<div class="row">
+      		<#if fans?has_content> 
+      		<#list fans as u>
+            <div class="col-6 col-sm-6 col-lg-4">
+            	<h3>${u.nickName}</h3>
+            	<p>${u.signature.content}</p>
+            </div>
+            </#list>
+            </#if>
+	       
+        </div><!-- end of row -->
+      </div><!-- end of container -->
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p class="credit">&copy; Bruce Zhang 2013 在絮絮叨叨的尾巴上添加一行看起来挺显眼的页脚用来测试这个页面究竟有多高不过在小屏幕上会显示成什么样子呢就完全不知道了</p>
+      </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${ctx}/skin/js/jquery.js"></script>
+    <script src="${ctx}/skin/js/bootstrap.min.js"></script>
+    <script src="${ctx}/skin/js/bootstrap-maxlength.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+});	
+</script>
+  </body>
+</html>

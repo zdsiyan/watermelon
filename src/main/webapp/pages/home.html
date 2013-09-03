@@ -54,19 +54,19 @@
       		<!-- start home zone -->
       		<div class="col-lg-2">
       			<div class="list-group">
-      				<a href="#" class="list-group-item active">
+      				<a href="${ctx}/home" class="list-group-item active">
 		              <h4 class="list-group-item-heading">${user.nickName}</h4>
 		              <p class="list-group-item-text">首页</p>
 		            </a>
-		            <a href="#" class="list-group-item">
+		            <a href="${ctx}/twibo/${user._id}/follow" class="list-group-item">
 		              <h4 class="list-group-item-heading">关注</h4>
 		              <p class="list-group-item-text">${user.followsSize}</p>
 		            </a>
-		            <a href="#" class="list-group-item">
+		            <a href="${ctx}/twibo/${user._id}/fans" class="list-group-item">
 		              <h4 class="list-group-item-heading">粉丝</h4>
 		              <p class="list-group-item-text">${user.fansSize}</p>
 		            </a>
-		            <a href="#" class="list-group-item">
+		            <a href="${ctx}/twibo/${user._id}/orign" class="list-group-item">
 		              <h4 class="list-group-item-heading">微博</h4>
 		              <p class="list-group-item-text">0</p>
 		            </a>
