@@ -82,8 +82,7 @@
 	        			<li><button id="sendTwibo" type="button" class="btn btn-lg btn-primary btn-block" style="padding:10px 30px 10px 30px;">发布</button></li>
 	        		</ul>
 	        	</p>
-	        	<hr>
-	        	<p class="text-center">
+	        	<p class="twibo-split-hr text-center">
 	        		大西瓜开源社交, 欢迎热爱开源的开发人员加入
 	        	</p>
 	        	<div id="twibo-pool">
@@ -99,7 +98,7 @@
 
     <div id="footer">
       <div class="container">
-        <p class="text-muted credit">&copy; Bruce Zhang 2013 在絮絮叨叨的尾巴上添加一行看起来挺显眼的页脚用来测试这个页面究竟有多高不过在小屏幕上会显示成什么样子呢就完全不知道了</p>
+        <p class="credit">&copy; Bruce Zhang 2013 在絮絮叨叨的尾巴上添加一行看起来挺显眼的页脚用来测试这个页面究竟有多高不过在小屏幕上会显示成什么样子呢就完全不知道了</p>
       </div>
     </div>
     
@@ -133,7 +132,11 @@ function getTwibo(){
 		if(data && data.status==10000){
 			var list=data.result;
 			for(var i=0,len=list.length;i<len;i++){
-				$("#twibo-pool").append("<p>"+list[i].user.nickName+" 曰:"+list[i].content+" 时间:"+list[i].timestamp+"</p>");
+				var d = new Date(list[i].timestamp);
+				var headvar="<div ToolTip='"+list[i].user.nickName+"'>孔子曰</div>";
+				var timevar="<div class='text-left twibo-time'>"+d.toLocaleString()+"</div>";
+				var link="<ul class='list-inline pull-right'><li>转发</li><li>评论</li></ul>";
+				$("#twibo-pool").append("<div class='twibo-bk'><p>"+headvar+list[i].content+" </p><p class='twibo-line'>"+link+timevar+"</p></div>");
 			}
 		}
 	});

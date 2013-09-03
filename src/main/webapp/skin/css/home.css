@@ -21,10 +21,13 @@ body {
 /* Set the fixed height of the footer here */
 #footer {
   height: 240px;
-  background-color: #474747;
-  font-size: 20px;
+  background-color: #6CA6CD;
+  font-size: 16px;
+  color:#2E2E2E;
+  text-shadow: 0 0px 1px #7A7A7A;
 }
-// for min footer
+
+/* for min footer */
 @media (min-width: 768px){
 	#footer{height: 120px;}
 }
@@ -38,6 +41,7 @@ body {
 #wrap > .container {
   padding: 60px 15px 0;
 }
+
 .container .credit {
   margin: 20px 0;
 }
@@ -53,4 +57,33 @@ code {
 
 .name-header{
 	text-shadow: 0 1px 1px #123;
+}
+
+#twibo{
+	border:1px solid;
+}
+
+.twibo-split-hr{
+	color:#F48C12;
+	background:#fffde0;
+	border:2px solid #f9f2a7;
+	border-radius:25px;
+	-webkit-border-radius:25px;
+	-moz-border-radius:25px;
+}
+
+.twibo-bk{
+	position:relative;
+	font-size: 14px;
+	margin: 5px 5px 5px 5px;
+	padding: 2px 2px 2px 2px;
+	border-bottom: 1px solid #ddd;
+}
+.twibo-line{
+	font-size: 8px;
+}
+.twibo-time{
+	color: #9da0a4;
+}
+.twibo-link{	
 }
