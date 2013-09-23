@@ -41,4 +41,6 @@
   <li><a href="http://www.blogjava.net/watchzerg/archive/2012/09/21/388291.html" target="_blank">Morphia与Spring的整合</a></li>
   <li><a href="http://download.csdn.net/detail/mapeijie888/4221150" target="_blank">Mongo集成Spring 资源</a></li>
   <li><a href="http://www.oschina.net/news/43645/30-amazing-plugins-extend-twitter-bootstrap" target="_blank">30 个惊艳的 Bootstrap 扩展插件</a></li>
+  <li><a href="http://bootboxjs.com/" target="_blank">bootboxjs弹出对话框</a></li>
+  <li><a href="https://github.com/mimo84/bootstrap-maxlength" target="_blank">bootstrap-maxlength输入长度检查</a></li>
 </ul>
