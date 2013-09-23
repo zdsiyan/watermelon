@@ -99,13 +99,13 @@ public class MUser extends BaseEntity implements Serializable{
 	public Integer getFollowsSize(){
 		if(follows!=null)
 			return follows.size();
-		return null;
+		return 0;
 	}
 	
 	public Integer getFansSize(){
 		if(fans!=null)
 			return fans.size();
-		return null;
+		return 0;
 	}
 	
 	public Signature getSignature() {

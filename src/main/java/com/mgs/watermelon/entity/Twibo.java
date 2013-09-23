@@ -1,6 +1,8 @@
 package com.mgs.watermelon.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -16,8 +18,6 @@ import com.google.code.morphia.annotations.Reference;
 @Entity("twibo")
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
 public class Twibo extends BaseEntity {
-	
-	
 	//发布的内容
 	private String content;
 	//时间戳
@@ -30,14 +30,17 @@ public class Twibo extends BaseEntity {
 	//转发的原始微博,可为空
 	@Reference
 	private Twibo original;
-	@Embedded
 	@JsonIgnore
+	@Embedded(concreteClass = Vector.class)  
 	private List<Twicomment> twicomments;
 	
 	public List<Twicomment> getTwicomments() {
+		if(twicomments==null){
+			twicomments = new ArrayList<Twicomment>();
+		}
 		return twicomments;
 	}
-	public void setTwiComments(List<Twicomment> twicomments) {
+	public void setTwicomments(List<Twicomment> twicomments) {
 		this.twicomments = twicomments;
 	}
 	public String getContent() {

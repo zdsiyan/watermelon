@@ -44,6 +44,12 @@
               <li class="active"><a href="#">首页</a></li>
               <li><a href="#"><i class="icon-tag">待定</i></a></li>
             </ul>
+            <form class="navbar-form navbar-left" role="search">
+		      <div class="form-group">
+		        <input type="text" class="form-control" placeholder="Search">
+		      </div>
+		      <button type="submit" class="btn btn-info">搜索</button>
+		    </form>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -68,7 +74,6 @@
 		            </a>
 		            <a href="${ctx}/twibo/${user._id}/orign" class="list-group-item">
 		              <h4 class="list-group-item-heading">微博</h4>
-		              <p class="list-group-item-text">0</p>
 		            </a>
       			</div>
       		</div><!-- end of home zone -->
@@ -79,7 +84,7 @@
 	        	<p>
 	        		<ul class="list-inline">
 	        			<li style="margin:10px;">#</li><li style="margin:10px;">#</li><li style="margin:10px;">#</li>
-	        			<li><button id="sendTwibo" type="button" class="btn btn-lg btn-primary btn-block" style="padding:10px 30px 10px 30px;">发布</button></li>
+	        			<li><button id="sendTwibo" type="button" class="btn btn-lg btn-info btn-block" style="padding:10px 30px 10px 30px;">发布</button></li>
 	        		</ul>
 	        	</p>
 	        	<p class="twibo-split-hr text-center">
@@ -98,49 +103,20 @@
 
     <div id="footer">
       <div class="container">
-        <p class="credit">&copy; Bruce Zhang 2013 在絮絮叨叨的尾巴上添加一行看起来挺显眼的页脚用来测试这个页面究竟有多高不过在小屏幕上会显示成什么样子呢就完全不知道了</p>
+        <p class="footer-font credit">&copy; Bruce Zhang 2013 在絮絮叨叨的尾巴上添加一行看起来挺显眼的页脚用来测试这个页面究竟有多高不过在小屏幕上会显示成什么样子呢就完全不知道了</p>
       </div>
     </div>
-    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script >
+    var ctx='${ctx}';
+    </script>
     <script src="skin/js/jquery.js"></script>
     <script src="skin/js/bootstrap.min.js"></script>
     <script src="skin/js/bootstrap-maxlength.min.js"></script>
-<script type="text/javascript">
-//cookie 记住userid, 但不保存密码
-$(document).ready(function(){
-	$("#twibo").maxlength();
-	$("#sendTwibo").click(sendTwibo);
-	getTwibo();
-});	
-
-
-function sendTwibo(){
-	$.post("${ctx}/twibo/post",{content:$("#twibo").val()},function(data){
-		//发送成功
-		if(data && data.status==10000){
-			$("#twibo").val("");
-		}
-	});
-}
-
-function getTwibo(){
-	//默认显示20条
-	$.post("${ctx}/twibo/list",{offset:0,length:20},function(data){
-		if(data && data.status==10000){
-			var list=data.result;
-			for(var i=0,len=list.length;i<len;i++){
-				var d = new Date(list[i].timestamp);
-				var headvar="<div ToolTip='"+list[i].user.nickName+"'>孔子曰</div>";
-				var timevar="<div class='text-left twibo-time'>"+d.toLocaleString()+"</div>";
-				var link="<ul class='list-inline pull-right'><li>转发</li><li>评论</li></ul>";
-				$("#twibo-pool").append("<div class='twibo-bk'><p>"+headvar+list[i].content+" </p><p class='twibo-line'>"+link+timevar+"</p></div>");
-			}
-		}
-	});
-}
-</script>
+    <script src="skin/js/bootbox.min.js"></script>
+    <script src="skin/js/home.js?${.now?string('yyyy-MM-dd HH:mm')}"></script>
+   
   </body>
 </html>

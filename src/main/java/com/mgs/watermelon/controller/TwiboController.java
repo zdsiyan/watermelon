@@ -1,6 +1,5 @@
 package com.mgs.watermelon.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mgs.watermelon.entity.MUser;
 import com.mgs.watermelon.entity.Twibo;
+import com.mgs.watermelon.entity.Twicomment;
 import com.mgs.watermelon.service.MUserService;
 import com.mgs.watermelon.service.TwiboService;
 import com.mgs.watermelon.vo.ResultVO;
@@ -41,22 +41,17 @@ public class TwiboController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/post")
-	public ResultVO<Twibo> post(HttpSession session, String content){
+	@RequestMapping(value="/post/twibo")
+	public ResultVO<Twibo> postTwibo(HttpSession session, String content){
 		MUser user= (MUser)session.getAttribute(SysDefinition.USER_SESSION_KEY);
 		if(user==null){
 			return new ResultVO<Twibo>(SysDefinition.CODE_NODATA,null,null);
 		}
 		Twibo result = null;
 		try{
-			result = new Twibo();
-			result.setContent(content);
-			result.setTimestamp(new Date().getTime());
-			result.setUser(user);
-			twiboService.save(result);
+			result = twiboService.postTwibo(content, user);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResultVO<Twibo>(SysDefinition.CODE_ERROR,null,null);
 		}
 		if(result!=null){
 			return new ResultVO<Twibo>(SysDefinition.CODE_SUCCESS,null,result);
@@ -65,6 +60,59 @@ public class TwiboController {
 		}
 	}
 	
+	/**
+	 * 发表评论
+	 * @param session
+	 * @param tid
+	 * @param content
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/post/comment")
+	public ResultVO<Twicomment> postComment(HttpSession session, String tid, String content){
+		MUser user= (MUser)session.getAttribute(SysDefinition.USER_SESSION_KEY);
+		if(user==null){
+			return new ResultVO<Twicomment>(SysDefinition.CODE_NODATA,null,null);
+		}
+		Twicomment result = null;
+		try{
+			Twibo twibo = twiboService.get(new ObjectId(tid));
+			result = twiboService.postComment(twibo, user, content);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		if(result!=null){
+			return new ResultVO<Twicomment>(SysDefinition.CODE_SUCCESS,null,result);
+		}else{
+			return new ResultVO<Twicomment>(SysDefinition.CODE_NODATA,null,null);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/comments")
+	public ResultVO<List<Twicomment>> comments(String tid){
+		List<Twicomment> result = null;
+		try{
+			Twibo twibo = twiboService.get(new ObjectId(tid));
+			//未分页
+			result = twibo.getTwicomments();
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		if(result!=null){
+			return new ResultVO<List<Twicomment>>(SysDefinition.CODE_SUCCESS,null,result);
+		}else{
+			return new ResultVO<List<Twicomment>>(SysDefinition.CODE_NODATA,null,null);
+		}
+	}
+	
+	/**
+	 * 列表获取twibo
+	 * @param session
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/list")
 	public ResultVO<List<Twibo>> list(HttpSession session, Integer offset, Integer length){
@@ -77,7 +125,6 @@ public class TwiboController {
 			result = twiboService.getList(user, offset, length);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResultVO<List<Twibo>>(SysDefinition.CODE_ERROR,null,null);
 		}
 		if(result!=null){
 			return new ResultVO<List<Twibo>>(SysDefinition.CODE_SUCCESS,null,result);
@@ -134,7 +181,6 @@ public class TwiboController {
 			result = twiboService.get(new ObjectId(oid));
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResultVO<Twibo>(SysDefinition.CODE_ERROR,null,null);
 		}
 		if(result!=null){
 			return new ResultVO<Twibo>(SysDefinition.CODE_SUCCESS,null,result);
