@@ -12,6 +12,7 @@ import com.google.code.morphia.query.Query;
 import com.google.code.morphia.query.QueryResults;
 import com.google.code.morphia.query.UpdateOperations;
 import com.google.code.morphia.query.UpdateResults;
+import com.mgs.watermelon.dao.MUserDAO;
 import com.mgs.watermelon.dao.TwiboDAO;
 import com.mgs.watermelon.entity.MUser;
 import com.mgs.watermelon.entity.Twibo;
@@ -19,6 +20,8 @@ import com.mgs.watermelon.entity.Twicomment;
 
 @Service
 public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
+	@Autowired
+	private MUserDAO mUserDAO;
 
 	@Autowired
 	private TwiboDAO twiboDAO;
@@ -45,6 +48,11 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 		result.setTimestamp(new Date().getTime());
 		result.setUser(user);
 		baseDao.save(result);
+		
+		Query<MUser> query = mUserDAO.createQuery().hintIndex(user.get_id());
+		UpdateOperations<MUser> uo = mUserDAO.createUpdateOperations().inc("twiSize");
+		mUserDAO.update(query, uo);
+		
 		return result;
 		
 	}

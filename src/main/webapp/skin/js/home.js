@@ -41,6 +41,8 @@ function sendTwibo(){
 		//发送成功
 		if(data && data.status==10000){
 			$("#twibo").val("");
+			var twiSize=parseInt($("#twiSize").text());
+			$("#twiSize").text(++twiSize);
 		}
 	});
 }
