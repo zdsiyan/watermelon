@@ -50,11 +50,25 @@
       <!-- Begin page content -->
       <div class="container">
       	<div class="row">
+      		<div class="col-lg-6">
+			    <div class="input-group" style="margin:10px;">
+			      <input name="searchaccount" type="text" class="form-control" placeholder="用户名/邮箱">
+			      <span class="input-group-btn">
+			        <button onclick="addFollow()" class="btn btn-default" type="button">添加关注</button>
+			      </span>
+			    </div><!-- /input-group -->
+			    
+			    <p class="twibo-split-hr text-center">
+	        		我关注的人
+	        	</p>
+			</div><!-- /.col-lg-6 -->
+      	</div>
+      	<div class="row">
       		<#if follows?has_content> 
       		<#list follows as u>
             <div class="col-6 col-sm-6 col-lg-4">
             	<h3>${u.nickName}</h3>
-            	<p>${u.signature.content}</p>
+            	<p>${u.signatureContent}</p>
             </div>
             </#list>
             </#if>
@@ -76,8 +90,18 @@
     <script src="${ctx}/skin/js/bootstrap.min.js"></script>
     <script src="${ctx}/skin/js/bootstrap-maxlength.min.js"></script>
 <script type="text/javascript">
+var ctx='${ctx}';
 $(document).ready(function(){
 });	
+
+function addFollow(){
+	$.post(ctx+"/user/follow",{name:$("input[name='searchaccount']").val()},function(data){
+		//添加成功		
+		if(data && data.status==10000){
+			$("input[name='searchaccount']").val("");
+		}
+	});
+}
 </script>
   </body>
 </html>

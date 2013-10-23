@@ -125,5 +125,9 @@
 		<constructor-arg ref="datastore" index="0"/>
 	</bean>
 	
+	<bean id="twicommentDAO" class="com.mgs.watermelon.dao.TwicommentDAO">
+		<constructor-arg ref="datastore" index="0"/>
+	</bean>
+	
 	
 </beans>

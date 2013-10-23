@@ -46,6 +46,7 @@ public class MUser extends BaseEntity implements Serializable{
 	private Set<MUser> fans;
 	//子文档 签名
 	@Embedded
+	@JsonIgnore
 	private Signature signature;
 	
 	private Integer twiSize;
@@ -116,6 +117,13 @@ public class MUser extends BaseEntity implements Serializable{
 
 	public void setSignature(Signature signature) {
 		this.signature = signature;
+	}
+	
+	public String getSignatureContent(){
+		if(signature!=null){
+			return signature.getContent();
+		}
+		return null;
 	}
 
 	public Integer getTwiSize() {

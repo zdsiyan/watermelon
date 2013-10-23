@@ -72,9 +72,9 @@ code {
 	-moz-border-radius:25px;
 }
 
-.twibo-bk{
+.twibo-bk,.comment-bk{
 	position:relative;
-	font-size: 14px;
+	font-size: 12px;
 	margin: 5px 5px 5px 5px;
 	padding: 2px 2px 2px 2px;
 	border-bottom: 1px solid #ddd;
@@ -86,6 +86,13 @@ code {
 	color: #9da0a4;
 }
 .twibo-link{	
+}
+.twibo-info,.comment-info{
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 16px;
+	margin:2px;
+	color:#333333;
 }
 
 .footer-font{

@@ -76,8 +76,7 @@ public class TwiboController {
 		}
 		Twicomment result = null;
 		try{
-			Twibo twibo = twiboService.get(new ObjectId(tid));
-			result = twiboService.postComment(twibo, user, content);
+			result = twiboService.postComment(tid, user, content);
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}
@@ -88,14 +87,20 @@ public class TwiboController {
 		}
 	}
 	
+	/**
+	 * 获取评论
+	 * @param tid
+	 * @param offset
+	 * @param length
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/comments")
-	public ResultVO<List<Twicomment>> comments(String tid){
+	public ResultVO<List<Twicomment>> comments(String tid, Integer offset, Integer length){
 		List<Twicomment> result = null;
 		try{
-			Twibo twibo = twiboService.get(new ObjectId(tid));
-			//未分页
-			result = twibo.getTwicomments();
+			//TODO:未分页
+			result = twiboService.getComments(tid, offset, length);
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}

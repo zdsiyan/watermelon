@@ -7,20 +7,22 @@ $(document).ready(function(){
 
 function showDialog(_id){	
 	showComment(_id);
-	bootbox.prompt($("div[name='"+_id+"'] .twibo-content").text(), function(result) {                
+	bootbox.prompt($("p[name='content"+_id+"']").text(), function(result) {                
 	  if (result) {                                             
 		//发送评论
-		  sendComment(_id,result);                                
+		sendComment(_id,result);                                
 	  }
 	});
 }
 
 function showComment(_id){
-	$.post(ctx+"/twibo/comments",{tid:_id}, function(data){
+	$.post(ctx+"/twibo/comments",{tid:_id,offset:0,length:20}, function(data){
 		if(data && data.status==10000){
 			var list=data.result;
 			for(var i=0,len=list.length;i<len;i++){
-				$("div .modal-body").append(list[i].user.nickName+" 说："+list[i].content+" 时间："+list[i].timestamp);
+				var d = new Date(list[i].timestamp);
+				var timevar="<div class='text-left twibo-time'>"+d.toLocaleString()+"</div>";
+				$("div .modal-body").append("<div class='comment-bk'><div class='comment-info'>"+list[i].user.nickName+"</div><div class='comment-content'>"+list[i].content+"</div><p class='twibo-line'>"+timevar+"</p></div>");
 			}
 			
 		}
@@ -54,10 +56,15 @@ function getTwibo(){
 			var list=data.result;
 			for(var i=0,len=list.length;i<len;i++){
 				var d = new Date(list[i].timestamp);
-				var headvar="<div ToolTip='"+list[i].user.nickName+"'>孔子曰</div>";
+				if(NICKNAME==list[i].user.nickName){
+					headvar="<div class='twibo-info' style='color:black;'>"+list[i].user.nickName+"</div>";
+				}else{
+					headvar="<div class='twibo-info'>"+list[i].user.nickName+"</div>";
+				}
 				var timevar="<div class='text-left twibo-time'>"+d.toLocaleString()+"</div>";
-				var link="<ul class='list-inline pull-right'><li>转发</li><li><a href='javascript:void(0)' onclick=\"showDialog('"+list[i]._id+"')\">评论</a></li></ul>";
-				$("#twibo-pool").append("<div name='"+list[i]._id+"' class='twibo-bk'>"+headvar+"<p class='twibo-content'>"+list[i].content+" </p><p class='twibo-line'>"+link+timevar+"</p></div>");
+				
+				var link="<ul class='list-inline pull-right'><li>转发</li><li><a href='javascript:void(0)' onclick=\"showDialog('"+list[i]._id+"')\">评论("+list[i].commentSize+")</a></li></ul>";
+				$("#twibo-pool").append("<div class='twibo-bk'><div class='twibo-detail'>"+headvar+"<p name='content"+list[i]._id+"' class='twibo-content'>"+list[i].content+" </p><p class='twibo-line'>"+link+timevar+"</p></div></div>");
 			}
 		}
 	});

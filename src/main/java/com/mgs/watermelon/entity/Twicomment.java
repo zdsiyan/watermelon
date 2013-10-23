@@ -1,14 +1,19 @@
 package com.mgs.watermelon.entity;
 
-import com.google.code.morphia.annotations.Embedded;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
 /**
- * 随便起的名字, 相当于评论
+ * 相当于评论
  * @author bruce
  */
-@Embedded
-public class Twicomment {
+@Entity("twicomment")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
+public class Twicomment extends BaseEntity{
+	@Reference
+	private Twibo twibo;
 	
 	private String content;	
 	private Long timestamp;
@@ -16,6 +21,12 @@ public class Twicomment {
 	@Reference
 	private MUser user;	
 	
+	public Twibo getTwibo() {
+		return twibo;
+	}
+	public void setTwibo(Twibo twibo) {
+		this.twibo = twibo;
+	}
 	public String getContent() {
 		return content;
 	}

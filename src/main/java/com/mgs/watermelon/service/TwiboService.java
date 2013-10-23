@@ -11,20 +11,25 @@ import org.springframework.stereotype.Service;
 import com.google.code.morphia.query.Query;
 import com.google.code.morphia.query.QueryResults;
 import com.google.code.morphia.query.UpdateOperations;
-import com.google.code.morphia.query.UpdateResults;
 import com.mgs.watermelon.dao.MUserDAO;
 import com.mgs.watermelon.dao.TwiboDAO;
+import com.mgs.watermelon.dao.TwicommentDAO;
 import com.mgs.watermelon.entity.MUser;
 import com.mgs.watermelon.entity.Twibo;
 import com.mgs.watermelon.entity.Twicomment;
 
 @Service
 public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
+
+
 	@Autowired
 	private MUserDAO mUserDAO;
 
 	@Autowired
 	private TwiboDAO twiboDAO;
+	
+	@Autowired
+	private TwicommentDAO twicommentDAO;
 
 	public TwiboDAO getTwiboDAO() {
 		return twiboDAO;
@@ -34,7 +39,6 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 		this.twiboDAO = twiboDAO;
 		super.setBaseDao(twiboDAO);
 	}
-
 
 	/**
 	 * 发表twibo
@@ -49,7 +53,7 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 		result.setUser(user);
 		baseDao.save(result);
 		
-		Query<MUser> query = mUserDAO.createQuery().hintIndex(user.get_id());
+		Query<MUser> query = mUserDAO.createQuery().field("_id").equal(user.get_id());
 		UpdateOperations<MUser> uo = mUserDAO.createUpdateOperations().inc("twiSize");
 		mUserDAO.update(query, uo);
 		
@@ -74,8 +78,8 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 		query.filter("user in ", lists).offset(offset).limit(length).order("-timestamp");
 		QueryResults<Twibo> result = baseDao.find(query);
 		return result.asList();
-	}
-
+	}	
+	
 	/**
 	 * 发表评论
 	 * @param twibo
@@ -83,24 +87,29 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 	 * @param content
 	 * @return
 	 */
-	public Twicomment postComment(Twibo twibo, MUser user, String content) {
+	public Twicomment postComment(String tid, MUser user, String content) {
+		Twibo twibo = get(new ObjectId(tid));
+		//保存评论
 		Twicomment comment = new Twicomment();
+		comment.setTwibo(twibo);
 		comment.setUser(user);
 		comment.setContent(content);
 		comment.setTimestamp(new Date().getTime());
-		twibo.getTwicomments().add(comment);
+		twicommentDAO.save(comment);
 		
-		Query<Twibo> query = createQuery().filter("oid", twibo.getOid());
-		UpdateOperations<Twibo> uo = baseDao.createUpdateOperations().set("twicomments", twibo.getTwicomments());
-		UpdateResults<Twibo> results= baseDao.update(query, uo);
-		if(results!=null && results.getUpdatedCount()==1){
-			return comment;
-		}
-		return null;
+		Query<Twibo> query = twiboDAO.createQuery().field("_id").equal(tid);
+		UpdateOperations<Twibo> uo = twiboDAO.createUpdateOperations().inc("commentSize");
+		twiboDAO.update(query, uo);
+		
+		return comment;
 	}
 
-	public List<Twicomment> comments(Twibo twibo) {
-		return null;
+	public List<Twicomment> getComments(String tid, Integer offset, Integer length) {
+		Twibo twibo=twiboDAO.get(new ObjectId(tid));
+		
+		Query<Twicomment> query = twicommentDAO.createQuery();
+		query.filter("twibo", twibo).offset(offset).limit(length).order("-timestamp");
+		QueryResults<Twicomment> result = twicommentDAO.find(query);
+		return result.asList();
 	}
-	
 }

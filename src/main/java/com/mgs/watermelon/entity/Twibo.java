@@ -1,13 +1,7 @@
 package com.mgs.watermelon.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 
@@ -30,19 +24,9 @@ public class Twibo extends BaseEntity {
 	//转发的原始微博,可为空
 	@Reference
 	private Twibo original;
-	@JsonIgnore
-	@Embedded(concreteClass = Vector.class)  
-	private List<Twicomment> twicomments;
+	//评论计数器
+	private Integer commentSize;
 	
-	public List<Twicomment> getTwicomments() {
-		if(twicomments==null){
-			twicomments = new ArrayList<Twicomment>();
-		}
-		return twicomments;
-	}
-	public void setTwicomments(List<Twicomment> twicomments) {
-		this.twicomments = twicomments;
-	}
 	public String getContent() {
 		return content;
 	}
@@ -72,6 +56,14 @@ public class Twibo extends BaseEntity {
 	}
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+	public Integer getCommentSize() {
+		if(commentSize!=null)
+			return commentSize;
+		return 0;
+	}
+	public void setCommentSize(Integer commentSize) {
+		this.commentSize = commentSize;
 	}
 
 }
