@@ -102,7 +102,7 @@ public class MUserService extends MongoBaseService<MUser, ObjectId>{
 		
 		Signature signature = new Signature();
 		signature.setContent(content);
-		signature.setTimestamp(new Date().getTime());
+		signature.setTimestamp(System.currentTimeMillis());
 		
 		UpdateOperations<MUser> uo = baseDao.createUpdateOperations().set("signature", signature);
 		

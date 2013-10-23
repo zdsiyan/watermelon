@@ -49,7 +49,7 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 	public Twibo postTwibo(String content, MUser user) {
 		Twibo result = new Twibo();
 		result.setContent(content);
-		result.setTimestamp(new Date().getTime());
+		result.setTimestamp(System.currentTimeMillis());
 		result.setUser(user);
 		baseDao.save(result);
 		
@@ -94,7 +94,7 @@ public class TwiboService extends MongoBaseService<Twibo, ObjectId> {
 		comment.setTwibo(twibo);
 		comment.setUser(user);
 		comment.setContent(content);
-		comment.setTimestamp(new Date().getTime());
+		comment.setTimestamp(System.currentTimeMillis());
 		twicommentDAO.save(comment);
 		
 		Query<Twibo> query = twiboDAO.createQuery().field("_id").equal(tid);
