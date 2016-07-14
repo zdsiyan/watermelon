@@ -1,8 +1,7 @@
 package com.mgs.watermelon.ext;
 
+import org.mongodb.morphia.Morphia;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-
-import com.google.code.morphia.Morphia;
 
 public class MorphiaFactoryBean extends AbstractFactoryBean<Morphia> {
 	/**

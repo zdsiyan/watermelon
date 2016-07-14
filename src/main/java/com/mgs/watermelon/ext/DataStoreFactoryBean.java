@@ -1,14 +1,15 @@
 package com.mgs.watermelon.ext;
 
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
-import com.google.code.morphia.Datastore;
-import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 public class DataStoreFactoryBean extends AbstractFactoryBean<Datastore> {
      
      private Morphia morphia;    //morphia实例，最好是单例
-     private Mongo mongo;    //mongo实例，最好是单例
+     //private Mongo mongo;    //mongo实例，最好是单例
      private String dbName;    //数据库名
      private String username;    //用户名，可为空
      private String password;    //密码，可为空
@@ -19,8 +20,7 @@ public class DataStoreFactoryBean extends AbstractFactoryBean<Datastore> {
      @Override
      protected Datastore createInstance() throws Exception {
          //这里的username和password可以为null，morphia对象会去处理
-         Datastore ds = morphia.createDatastore(mongo, dbName, username,
-                 password==null?null:password.toCharArray());
+         Datastore ds = morphia.createDatastore(new MongoClient(), dbName);
          if(toEnsureIndexes){
              ds.ensureIndexes();
          }
@@ -38,9 +38,9 @@ public class DataStoreFactoryBean extends AbstractFactoryBean<Datastore> {
      @Override
      public void afterPropertiesSet() throws Exception {
          super.afterPropertiesSet();
-         if (mongo == null) {
+        /* if (mongo == null) {
              throw new IllegalStateException("mongo is not set");
-         }
+         }*/
          if (morphia == null) {
              throw new IllegalStateException("morphia is not set");
          }
@@ -56,13 +56,13 @@ public class DataStoreFactoryBean extends AbstractFactoryBean<Datastore> {
 		this.morphia = morphia;
 	}
 
-	public Mongo getMongo() {
+	/*public Mongo getMongo() {
 		return mongo;
 	}
 
 	public void setMongo(Mongo mongo) {
 		this.mongo = mongo;
-	}
+	}*/
 
 	public String getDbName() {
 		return dbName;

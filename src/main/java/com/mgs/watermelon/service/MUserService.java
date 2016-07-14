@@ -1,16 +1,15 @@
 package com.mgs.watermelon.service;
 
-import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.code.morphia.query.Query;
-import com.google.code.morphia.query.UpdateOperations;
-import com.google.code.morphia.query.UpdateResults;
 import com.mgs.watermelon.dao.MUserDAO;
 import com.mgs.watermelon.entity.MUser;
 import com.mgs.watermelon.entity.Signature;
@@ -106,7 +105,7 @@ public class MUserService extends MongoBaseService<MUser, ObjectId>{
 		
 		UpdateOperations<MUser> uo = baseDao.createUpdateOperations().set("signature", signature);
 		
-		UpdateResults<MUser> results= baseDao.update(query, uo);
+		UpdateResults results= baseDao.update(query, uo);
 		if(results!=null && results.getUpdatedCount()==1){
 			user.setSignature(signature);
 		}

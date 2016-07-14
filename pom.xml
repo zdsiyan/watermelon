@@ -32,16 +32,17 @@
 		</dependency>
 		<!-- mongodb drive start -->
 		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>2.11.2</version>
-		</dependency>            
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongo-java-driver</artifactId>
+		    <version>3.2.2</version>
+		</dependency>         
 		<!-- mongodb drive end -->
 		<!-- morphia start -->
+		<!-- https://mvnrepository.com/artifact/org.mongodb.morphia/morphia -->
 		<dependency>
-			<groupId>com.google.code.morphia</groupId>
-			<artifactId>morphia</artifactId>
-			<version>0.102</version>
+		    <groupId>org.mongodb.morphia</groupId>
+		    <artifactId>morphia</artifactId>
+		    <version>1.2.1</version>
 		</dependency>
 		<!-- Optional Jars (for certain features) but required by maven for building. -->
 		<!-- <dependency>

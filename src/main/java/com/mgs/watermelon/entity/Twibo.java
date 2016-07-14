@@ -1,9 +1,8 @@
 package com.mgs.watermelon.entity;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-
-import com.google.code.morphia.annotations.Entity;
-import com.google.code.morphia.annotations.Reference;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Reference;
 
 /**
  * 随便起的名字, 相当于微博

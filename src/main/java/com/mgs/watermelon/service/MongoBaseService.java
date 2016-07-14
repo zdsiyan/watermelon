@@ -1,11 +1,11 @@
 package com.mgs.watermelon.service;
 
 
-import com.google.code.morphia.Datastore;
-import com.google.code.morphia.Key;
-import com.google.code.morphia.dao.DAO;
-import com.google.code.morphia.query.Query;
-import com.google.code.morphia.query.QueryResults;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
+import org.mongodb.morphia.dao.DAO;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.QueryResults;
 
 /**
  * 

@@ -1,6 +1,6 @@
 package com.mgs.watermelon.entity;
 
-import com.google.code.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Embedded;
 
 @Embedded
 public class Signature {

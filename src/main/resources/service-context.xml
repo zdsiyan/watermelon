@@ -62,25 +62,6 @@
 		<property name="j" value="false" />
 	</bean>
 
-	<!-- 使用工厂创建mongo实例 -->
-	<bean id="mongo" class="com.mgs.watermelon.ext.MongoFactoryBean">
-		<!-- mongoDB的配置对象 -->
-		<property name="mongoOptions" ref="mongoOptions" />
-
-		<!-- 是否主从分离(读取从库)，默认为false，读写都在主库 -->
-		<property name="readSecondary" value="false" />
-
-		<!-- 设定写策略，默认为WriteConcern.SAFE，优先级高于mongoOptions中的safe -->
-		<property name="writeConcern" value="SAFE" />
-
-		<!-- 设定服务器列表，默认为localhost:27017 -->
-		<property name="serverStrings">
-			<array>
-				<value>${mongo.db.host}</value>
-			</array>
-		</property>
-	</bean>
-
 	<!-- 使用工厂创建morphia实例，同时完成类映射操作 -->
 	<bean id="morphia" class="com.mgs.watermelon.ext.MorphiaFactoryBean">
 		<!-- 指定要扫描的POJO包路径 -->
@@ -100,7 +81,7 @@
 	<!-- 使用工厂创建datastore，同时完成index和caps的确认操作 -->
 	<bean id="datastore" class="com.mgs.watermelon.ext.DataStoreFactoryBean">
 		<property name="morphia" ref="morphia" />
-		<property name="mongo" ref="mongo" />
+		<!-- <property name="mongo" ref="mongo" /> -->
 		<property name="dbName" value="${mongo.db.databaseName}" />
 		<!-- 用户名和密码可以为空 -->
 		<!-- <property name="username" value="my_username"/> <property name="password" 

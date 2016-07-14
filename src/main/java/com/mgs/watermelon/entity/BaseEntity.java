@@ -2,8 +2,7 @@ package com.mgs.watermelon.entity;
 
 import org.bson.types.ObjectId;
 import org.codehaus.jackson.annotate.JsonIgnore;
-
-import com.google.code.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Id;
 
 public abstract class BaseEntity {
 	@Id
