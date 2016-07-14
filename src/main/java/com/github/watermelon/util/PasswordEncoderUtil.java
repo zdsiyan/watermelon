@@ -1,11 +1,12 @@
 package com.github.watermelon.util;
 
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.codec.Base64;
-
 import java.security.MessageDigest;
 import java.util.Random;
 
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.codec.Base64;
+
+@SuppressWarnings("deprecation")
 public class PasswordEncoderUtil implements PasswordEncoder {
 	// ~ Static fields/initializers
 	// =====================================================================================
