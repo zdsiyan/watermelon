@@ -1,4 +1,4 @@
-package com.mgs.watermelon.vo;
+package com.github.watermelon.vo;
 
 public class ResultVO<T> {
 	private Integer status;

@@ -1,4 +1,4 @@
-package com.mgs.watermelon.service;
+package com.github.watermelon.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mgs.watermelon.dao.MUserDAO;
-import com.mgs.watermelon.dao.TwiboDAO;
-import com.mgs.watermelon.dao.TwicommentDAO;
-import com.mgs.watermelon.entity.MUser;
-import com.mgs.watermelon.entity.Twibo;
-import com.mgs.watermelon.entity.Twicomment;
+import com.github.watermelon.dao.MUserDAO;
+import com.github.watermelon.dao.TwiboDAO;
+import com.github.watermelon.dao.TwicommentDAO;
+import com.github.watermelon.entity.MUser;
+import com.github.watermelon.entity.Twibo;
+import com.github.watermelon.entity.Twicomment;
 
 @Service
 public class TwiboService extends MongoBaseService<Twibo, ObjectId> {

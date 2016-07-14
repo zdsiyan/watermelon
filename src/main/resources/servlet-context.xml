@@ -16,7 +16,7 @@
     <mvc:resources mapping="/skin/**" location="/skin/" />
 	
 	<!-- 对所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
-	<context:component-scan base-package="com.mgs.watermelon">
+	<context:component-scan base-package="com.github.watermelon">
 		<context:exclude-filter type="annotation" 
 				expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
@@ -40,7 +40,7 @@
 	 <mvc:interceptors>  
         <mvc:interceptor>  
             <mvc:mapping path="/home"/>
-            <bean class="com.mgs.watermelon.interceptor.UserInterceptor"></bean>  
+            <bean class="com.github.watermelon.interceptor.UserInterceptor"></bean>  
         </mvc:interceptor>  
     </mvc:interceptors>
 	

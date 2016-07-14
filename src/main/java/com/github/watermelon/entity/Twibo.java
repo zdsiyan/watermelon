@@ -1,4 +1,4 @@
-package com.mgs.watermelon.entity;
+package com.github.watermelon.entity;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.mongodb.morphia.annotations.Entity;

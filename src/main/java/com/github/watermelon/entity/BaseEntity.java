@@ -1,4 +1,4 @@
-package com.mgs.watermelon.entity;
+package com.github.watermelon.entity;
 
 import org.bson.types.ObjectId;
 import org.codehaus.jackson.annotate.JsonIgnore;

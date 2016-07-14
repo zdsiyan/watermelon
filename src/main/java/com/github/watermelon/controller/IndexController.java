@@ -1,4 +1,4 @@
-package com.mgs.watermelon.controller;
+package com.github.watermelon.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mgs.watermelon.entity.MUser;
-import com.mgs.watermelon.vo.SysDefinition;
+import com.github.watermelon.entity.MUser;
+import com.github.watermelon.vo.SysDefinition;
 
 /**
  * @author Bruce

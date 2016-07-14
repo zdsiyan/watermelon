@@ -1,4 +1,4 @@
-package com.mgs.watermelon.entity;
+package com.github.watermelon.entity;
 
 import java.io.Serializable;
 import java.util.Set;

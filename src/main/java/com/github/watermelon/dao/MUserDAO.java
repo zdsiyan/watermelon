@@ -1,10 +1,10 @@
-package com.mgs.watermelon.dao;
+package com.github.watermelon.dao;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 
-import com.mgs.watermelon.entity.MUser;
+import com.github.watermelon.entity.MUser;
 
 public class MUserDAO extends BasicDAO<MUser, ObjectId> {
 

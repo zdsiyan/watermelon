@@ -1,4 +1,4 @@
-package com.mgs.watermelon.ext;
+package com.github.watermelon.ext;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;

@@ -1,4 +1,4 @@
-package com.mgs.watermelon.interceptor;
+package com.github.watermelon.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.mgs.watermelon.entity.MUser;
-import com.mgs.watermelon.vo.SysDefinition;
+import com.github.watermelon.entity.MUser;
+import com.github.watermelon.vo.SysDefinition;
 
 /**
  * 登录状态检查

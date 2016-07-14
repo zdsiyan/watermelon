@@ -1,4 +1,4 @@
-package com.mgs.watermelon.ext;
+package com.github.watermelon.ext;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,7 @@
 
 	<description>Spring-database配置</description>
 
-	<context:component-scan base-package="com.mgs.watermelon">
+	<context:component-scan base-package="com.github.watermelon">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
@@ -63,7 +63,7 @@
 	</bean>
 
 	<!-- 使用工厂创建morphia实例，同时完成类映射操作 -->
-	<bean id="morphia" class="com.mgs.watermelon.ext.MorphiaFactoryBean">
+	<bean id="morphia" class="com.github.watermelon.ext.MorphiaFactoryBean">
 		<!-- 指定要扫描的POJO包路径 -->
 		<property name="mapPackages">
 			<array>
@@ -73,13 +73,13 @@
 	</bean>
 	
 	<!-- 密码加密解密 -->
-	<bean id="passwordEncoderUtil" class="com.mgs.watermelon.util.PasswordEncoderUtil">
+	<bean id="passwordEncoderUtil" class="com.github.watermelon.util.PasswordEncoderUtil">
     	<property name="encodeAlgorithm" value="MD5"/>
     </bean>
 
 
 	<!-- 使用工厂创建datastore，同时完成index和caps的确认操作 -->
-	<bean id="datastore" class="com.mgs.watermelon.ext.DataStoreFactoryBean">
+	<bean id="datastore" class="com.github.watermelon.ext.DataStoreFactoryBean">
 		<property name="morphia" ref="morphia" />
 		<!-- <property name="mongo" ref="mongo" /> -->
 		<property name="dbName" value="${mongo.db.databaseName}" />
@@ -91,22 +91,22 @@
 		<property name="toEnsureCaps" value="true" />
 	</bean>
 	
-	<bean id="baseDAO" class="com.mgs.watermelon.dao.MUserDAO">
+	<bean id="baseDAO" class="com.github.watermelon.dao.MUserDAO">
 		<constructor-arg ref="datastore" index="0"/>
 	</bean>
 
 	<!-- dao <bean id="myEntityDao" class="dao.MyEntityDao"> <constructor-arg 
 		ref="mongo"></constructor-arg> <constructor-arg ref="morphia"></constructor-arg> 
 		<constructor-arg value="mydb"></constructor-arg> </bean> -->
-	<bean id="mUserDAO" class="com.mgs.watermelon.dao.MUserDAO">
+	<bean id="mUserDAO" class="com.github.watermelon.dao.MUserDAO">
 		<constructor-arg ref="datastore" index="0"/>
 	</bean>
 	
-	<bean id="twiboDAO" class="com.mgs.watermelon.dao.TwiboDAO">
+	<bean id="twiboDAO" class="com.github.watermelon.dao.TwiboDAO">
 		<constructor-arg ref="datastore" index="0"/>
 	</bean>
 	
-	<bean id="twicommentDAO" class="com.mgs.watermelon.dao.TwicommentDAO">
+	<bean id="twicommentDAO" class="com.github.watermelon.dao.TwicommentDAO">
 		<constructor-arg ref="datastore" index="0"/>
 	</bean>
 	

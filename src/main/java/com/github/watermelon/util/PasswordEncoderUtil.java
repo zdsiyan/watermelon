@@ -1,4 +1,4 @@
-package com.mgs.watermelon.util;
+package com.github.watermelon.util;
 
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.codec.Base64;
