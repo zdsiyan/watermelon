@@ -1,21 +1,21 @@
-package com.github.watermelon.entity;
+package com.github.watermelon.module.common.entity;
 
 import java.io.Serializable;
 import java.util.Set;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.Reference;
 import org.mongodb.morphia.utils.IndexDirection;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.github.watermelon.core.entity.BaseEntity;
+
 /**
  * @author bruce
  */
 @Entity("muser")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
 public class MUser extends BaseEntity implements Serializable{
 	/**
 	 * 序列化, 为Set做处理
@@ -32,20 +32,20 @@ public class MUser extends BaseEntity implements Serializable{
 	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
 	private String validationEmail;
 	//密码
-	@JsonIgnore
+	@JSONField(serialize=false)
 	private String password;
 	
 	//引用 关注人
 	@Reference
-	@JsonIgnore
+	@JSONField(serialize=false)
 	private Set<MUser> follows;
 	//引用 被关注人
 	@Reference
-	@JsonIgnore
+	@JSONField(serialize=false)
 	private Set<MUser> fans;
 	//子文档 签名
 	@Embedded
-	@JsonIgnore
+	@JSONField(serialize=false)
 	private Signature signature;
 	
 	private Integer twiSize;

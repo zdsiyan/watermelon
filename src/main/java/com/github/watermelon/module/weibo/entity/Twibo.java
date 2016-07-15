@@ -1,15 +1,16 @@
-package com.github.watermelon.entity;
+package com.github.watermelon.module.weibo.entity;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
+
+import com.github.watermelon.core.entity.BaseEntity;
+import com.github.watermelon.module.common.entity.MUser;
 
 /**
  * 随便起的名字, 相当于微博
  * @author bruce
  */
 @Entity("twibo")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
 public class Twibo extends BaseEntity {
 	//发布的内容
 	private String content;

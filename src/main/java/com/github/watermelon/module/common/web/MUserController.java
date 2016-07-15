@@ -1,4 +1,4 @@
-package com.github.watermelon.controller;
+package com.github.watermelon.module.common.web;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.watermelon.entity.MUser;
-import com.github.watermelon.service.MUserService;
-import com.github.watermelon.vo.ResultVO;
-import com.github.watermelon.vo.SysDefinition;
+import com.github.watermelon.core.vo.ResultVO;
+import com.github.watermelon.core.vo.SysDefinition;
+import com.github.watermelon.module.common.entity.MUser;
+import com.github.watermelon.module.common.service.MUserService;
 
 @Controller
 @RequestMapping("/user")

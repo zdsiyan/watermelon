@@ -1,4 +1,4 @@
-package com.github.watermelon.ext;
+package com.github.watermelon.core.ext;
 
 import org.mongodb.morphia.Morphia;
 import org.springframework.beans.factory.config.AbstractFactoryBean;

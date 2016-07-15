@@ -1,4 +1,4 @@
-package com.github.watermelon.controller;
+package com.github.watermelon.module.weibo.web;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.watermelon.entity.MUser;
-import com.github.watermelon.entity.Twibo;
-import com.github.watermelon.entity.Twicomment;
-import com.github.watermelon.service.MUserService;
-import com.github.watermelon.service.TwiboService;
-import com.github.watermelon.vo.ResultVO;
-import com.github.watermelon.vo.SysDefinition;
+import com.github.watermelon.core.vo.ResultVO;
+import com.github.watermelon.core.vo.SysDefinition;
+import com.github.watermelon.module.common.entity.MUser;
+import com.github.watermelon.module.common.service.MUserService;
+import com.github.watermelon.module.weibo.entity.Twibo;
+import com.github.watermelon.module.weibo.entity.Twicomment;
+import com.github.watermelon.module.weibo.service.TwiboService;
 
 @Controller
 @RequestMapping("/twibo")

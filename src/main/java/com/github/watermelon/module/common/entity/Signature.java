@@ -1,4 +1,4 @@
-package com.github.watermelon.entity;
+package com.github.watermelon.module.common.entity;
 
 import org.mongodb.morphia.annotations.Embedded;
 

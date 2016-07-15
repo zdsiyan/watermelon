@@ -1,12 +1,13 @@
-package com.github.watermelon.entity;
+package com.github.watermelon.core.entity;
 
 import org.bson.types.ObjectId;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.mongodb.morphia.annotations.Id;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 public abstract class BaseEntity {
 	@Id
-	@JsonIgnore
+	@JSONField(serialize=false)
 	private ObjectId oid;
 	
 	public ObjectId getOid() {

@@ -1,15 +1,16 @@
-package com.github.watermelon.entity;
+package com.github.watermelon.module.weibo.entity;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
+
+import com.github.watermelon.core.entity.BaseEntity;
+import com.github.watermelon.module.common.entity.MUser;
 
 /**
  * 相当于评论
  * @author bruce
  */
 @Entity("twicomment")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
 public class Twicomment extends BaseEntity{
 	@Reference
 	private Twibo twibo;

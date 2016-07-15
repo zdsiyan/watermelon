@@ -36,6 +36,11 @@
 	<!-- 注解 -->
 	<mvc:annotation-driven />
 	
+	<!--默认处理适配器 -->
+	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+	
+	
 		
 	 <mvc:interceptors>  
         <mvc:interceptor>  

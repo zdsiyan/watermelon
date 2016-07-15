@@ -1,4 +1,4 @@
-package com.github.watermelon.service;
+package com.github.watermelon.module.common.service;
 
 import java.util.Set;
 
@@ -10,10 +10,11 @@ import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.watermelon.dao.MUserDAO;
-import com.github.watermelon.entity.MUser;
-import com.github.watermelon.entity.Signature;
-import com.github.watermelon.util.PasswordEncoderUtil;
+import com.github.watermelon.core.service.MongoBaseService;
+import com.github.watermelon.core.util.PasswordEncoderUtil;
+import com.github.watermelon.module.common.dao.MUserDAO;
+import com.github.watermelon.module.common.entity.MUser;
+import com.github.watermelon.module.common.entity.Signature;
 
 @Service
 public class MUserService extends MongoBaseService<MUser, ObjectId>{

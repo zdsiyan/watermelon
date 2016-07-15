@@ -1,4 +1,4 @@
-package com.github.watermelon.vo;
+package com.github.watermelon.core.vo;
 
 public class SysDefinition {
 	

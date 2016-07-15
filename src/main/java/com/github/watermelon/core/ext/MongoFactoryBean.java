@@ -1,4 +1,4 @@
-package com.github.watermelon.ext;
+package com.github.watermelon.core.ext;
 
 import java.util.ArrayList;
 import java.util.List;

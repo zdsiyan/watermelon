@@ -1,4 +1,4 @@
-package com.github.watermelon.util;
+package com.github.watermelon.core.util;
 
 import java.security.MessageDigest;
 import java.util.Random;

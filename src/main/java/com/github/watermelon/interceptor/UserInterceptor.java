@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.github.watermelon.entity.MUser;
-import com.github.watermelon.vo.SysDefinition;
+import com.github.watermelon.core.vo.SysDefinition;
+import com.github.watermelon.module.common.entity.MUser;
 
 /**
  * 登录状态检查
