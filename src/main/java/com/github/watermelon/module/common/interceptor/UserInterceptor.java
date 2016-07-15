@@ -1,4 +1,4 @@
-package com.github.watermelon.interceptor;
+package com.github.watermelon.module.common.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

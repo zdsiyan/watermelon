@@ -1,6 +1,6 @@
 Watermelon开源项目
 ===
-基于  maven + spring3 + spring mvc + mongodb + json + morphia 框架
+基于  maven + spring + spring mvc + mongodb + json + morphia 框架
 
 
 # 填坑
