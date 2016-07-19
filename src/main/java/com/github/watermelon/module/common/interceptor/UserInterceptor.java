@@ -10,9 +10,8 @@ import com.github.watermelon.core.vo.SysDefinition;
 import com.github.watermelon.module.common.entity.MUser;
 
 /**
- * 登录状态检查
+ * 登录状态检查，临时处理，以后调整
  * @author admin
- *
  */
 public class UserInterceptor extends HandlerInterceptorAdapter{
 
