@@ -66,11 +66,11 @@ public class MongoBaseService<T, K> {
 		return baseDao.save(entity);
 	}
 
-	public DAO getBaseDao() {
+	public DAO<T, K> getBaseDao() {
 		return baseDao;
 	}
 
-	public void setBaseDao(DAO baseDao) {
+	public void setBaseDao(DAO<T, K> baseDao) {
 		this.baseDao = baseDao;
 	}
 

@@ -4,8 +4,11 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+
+/**
+ * @author Gabriel
+ */
 public class DataStoreFactoryBean extends AbstractFactoryBean<Datastore> {
      
      private Morphia morphia;    //morphia实例，最好是单例

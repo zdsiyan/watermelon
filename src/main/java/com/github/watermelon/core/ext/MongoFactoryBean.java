@@ -10,17 +10,22 @@ import com.mongodb.MongoOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
-  
+
+/**
+ * @author Gabriel
+ */
 public class MongoFactoryBean extends AbstractFactoryBean<Mongo> {
  
      // 表示服务器列表(主从复制或者分片)的字符串数组
      private String[] serverStrings;
      // mongoDB配置对象
-     private MongoOptions mongoOptions;
+     @SuppressWarnings("deprecation")
+	private MongoOptions mongoOptions;
      // 是否主从分离(读取从库)，默认读写都在主库
      private boolean readSecondary = false;
      // 设定写策略(出错时是否抛异常)，默认采用SAFE模式(需要抛异常)
-     private WriteConcern writeConcern = WriteConcern.SAFE;
+     @SuppressWarnings("deprecation")
+	private WriteConcern writeConcern = WriteConcern.SAFE;
  
      @Override
      public Class<?> getObjectType() {
