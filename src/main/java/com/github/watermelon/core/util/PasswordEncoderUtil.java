@@ -3,8 +3,8 @@ package com.github.watermelon.core.util;
 import java.security.MessageDigest;
 import java.util.Random;
 
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.crypto.codec.Base64;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.Base64;
 
 @SuppressWarnings("deprecation")
 public class PasswordEncoderUtil implements PasswordEncoder {
@@ -36,6 +36,11 @@ public class PasswordEncoderUtil implements PasswordEncoder {
 
 	// ~ Methods
 	// ========================================================================================================
+	@Override
+	public String encode(CharSequence rawPass) {
+		return encodePassword(rawPass.toString(), null);
+	}
+
 	public String encodePassword(String rawPass, Object salt) {
 		if (encodeAlgorithm.equalsIgnoreCase(MD5)) {
 			return encodeMD5Password(rawPass);
@@ -88,11 +93,16 @@ public class PasswordEncoderUtil implements PasswordEncoder {
 		if (salt != null) {
 			messageDigest.update(salt);
 			byte[] hash = combineHashAndSalt(messageDigest.digest(), salt);
-			encPass = new String(Base64.encode(hash));
+			encPass = Base64.getEncoder().encodeToString(hash);
 		} else {
-			encPass = new String(Base64.encode(messageDigest.digest()));
+			encPass = Base64.getEncoder().encodeToString(messageDigest.digest());
 		}
 		return encPass;
+	}
+
+	@Override
+	public boolean matches(CharSequence rawPass, String encodedPassword) {
+		return isPasswordValid(encodedPassword, rawPass.toString(), null);
 	}
 
 	public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
@@ -164,7 +174,7 @@ public class PasswordEncoderUtil implements PasswordEncoder {
 	}
 
 	private byte[] extractSalt(String encPass, int hashLength) {
-		byte[] hashAndSalt = Base64.decode(encPass.getBytes());
+		byte[] hashAndSalt = Base64.getDecoder().decode(encPass);
 		int saltLength = hashAndSalt.length - hashLength;
 		byte[] salt = new byte[saltLength];
 		System.arraycopy(hashAndSalt, hashLength, salt, 0, saltLength);

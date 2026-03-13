@@ -1,192 +1,204 @@
 package com.github.watermelon.module.common.entity;
 
-import java.io.Serializable;
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.github.watermelon.core.entity.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashSet;
 import java.util.Set;
 
-import org.mongodb.morphia.annotations.Embedded;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Indexed;
-import org.mongodb.morphia.annotations.Reference;
-import org.mongodb.morphia.utils.IndexDirection;
-
-import com.alibaba.fastjson.annotation.JSONField;
-import com.github.watermelon.core.entity.BaseEntity;
-
 /**
+ * 用户实体类
+ * 使用Spring Data MongoDB注解
+ *
  * @author bruce
  */
-@Entity("muser")
-public class MUser extends BaseEntity implements Serializable{
-	/**
-	 * 序列化, 为Set做处理
-	 */
-	private static final long serialVersionUID = -4000181846290366322L;
-	
-	//用户名
-	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
-	private String userName;
-	//昵称
-	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
-	private String nickName;
-	//验证邮箱
-	@Indexed(value=IndexDirection.ASC, unique=true, dropDups=true)
-	private String validationEmail;
-	//密码
-	@JSONField(serialize=false)
-	private String password;
-	
-	//引用 关注人
-	@Reference
-	@JSONField(serialize=false)
-	private Set<MUser> follows;
-	//引用 被关注人
-	@Reference
-	@JSONField(serialize=false)
-	private Set<MUser> fans;
-	//子文档 签名
-	@Embedded
-	@JSONField(serialize=false)
-	private Signature signature;
-	
-	private Integer twiSize;
+@Getter
+@Setter
+@Document(collection = "muser")
+public class MUser extends BaseEntity {
 
-	public String getUserName() {
-		return userName;
-	}
+    /**
+     * 序列化, 为Set做处理
+     */
+    private static final long serialVersionUID = -4000181846290366322L;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    // 用户名
+    @Indexed(unique = true)
+    private String userName;
 
-	public String getNickName() {
-		return nickName;
-	}
+    // 昵称
+    @Indexed(unique = true)
+    private String nickName;
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+    // 验证邮箱
+    @Indexed(unique = true)
+    private String validationEmail;
 
-	public String getValidationEmail() {
-		return validationEmail;
-	}
+    // 密码
+    @JSONField(serialize = false)
+    private String password;
 
-	public void setValidationEmail(String validationEmail) {
-		this.validationEmail = validationEmail;
-	}
+    // 引用 关注人
+    @DBRef(lazy = true)
+    @JSONField(serialize = false)
+    private Set<MUser> follows = new HashSet<>();
 
-	public String getPassword() {
-		return password;
-	}
+    // 引用 被关注人
+    @DBRef(lazy = true)
+    @JSONField(serialize = false)
+    private Set<MUser> fans = new HashSet<>();
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    // 子文档 签名
+    @JSONField(serialize = false)
+    private Signature signature;
 
-	public Set<MUser> getFollows() {
-		return follows;
-	}
+    // 微博数量
+    private Integer twiSize = 0;
 
-	public void setFollows(Set<MUser> follows) {
-		this.follows = follows;
-	}
+    /**
+     * 获取关注数量
+     */
+    public Integer getFollowsSize() {
+        return follows != null ? follows.size() : 0;
+    }
 
-	public Set<MUser> getFans() {
-		return fans;
-	}
+    /**
+     * 获取粉丝数量
+     */
+    public Integer getFansSize() {
+        return fans != null ? fans.size() : 0;
+    }
 
-	public void setFans(Set<MUser> fans) {
-		this.fans = fans;
-	}
-	
-	public Integer getFollowsSize(){
-		if(follows!=null)
-			return follows.size();
-		return 0;
-	}
-	
-	public Integer getFansSize(){
-		if(fans!=null)
-			return fans.size();
-		return 0;
-	}
-	
-	public Signature getSignature() {
-		return signature;
-	}
+    /**
+     * 获取签名内容
+     */
+    public String getSignatureContent() {
+        return signature != null ? signature.getContent() : null;
+    }
 
-	public void setSignature(Signature signature) {
-		this.signature = signature;
-	}
-	
-	public String getSignatureContent(){
-		if(signature!=null){
-			return signature.getContent();
-		}
-		return null;
-	}
+    /**
+     * 获取微博数量（处理null值）
+     */
+    public Integer getTwiSize() {
+        return twiSize != null ? twiSize : 0;
+    }
 
-	public Integer getTwiSize() {
-		if(twiSize!=null)
-			return twiSize;
-		return 0;
-	}
+    /**
+     * 添加关注
+     */
+    public boolean addFollow(MUser user) {
+        if (user == null || user.getId() == null || user.getId().equals(this.getId())) {
+            return false;
+        }
+        return follows.add(user);
+    }
 
-	public void setTwiSize(Integer twiSize) {
-		this.twiSize = twiSize;
-	}
+    /**
+     * 移除关注
+     */
+    public boolean removeFollow(MUser user) {
+        if (user == null || user.getId() == null) {
+            return false;
+        }
+        return follows.removeIf(u -> u.getId().equals(user.getId()));
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((nickName == null) ? 0 : nickName.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result
-				+ ((signature == null) ? 0 : signature.hashCode());
-		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
-		result = prime * result
-				+ ((validationEmail == null) ? 0 : validationEmail.hashCode());
-		return result;
-	}
+    /**
+     * 添加粉丝
+     */
+    public boolean addFan(MUser user) {
+        if (user == null || user.getId() == null || user.getId().equals(this.getId())) {
+            return false;
+        }
+        return fans.add(user);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MUser other = (MUser) obj;
-		if (nickName == null) {
-			if (other.nickName != null)
-				return false;
-		} else if (!nickName.equals(other.nickName))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (signature == null) {
-			if (other.signature != null)
-				return false;
-		} else if (!signature.equals(other.signature))
-			return false;
-		if (userName == null) {
-			if (other.userName != null)
-				return false;
-		} else if (!userName.equals(other.userName))
-			return false;
-		if (validationEmail == null) {
-			if (other.validationEmail != null)
-				return false;
-		} else if (!validationEmail.equals(other.validationEmail))
-			return false;
-		return true;
-	}
+    /**
+     * 移除粉丝
+     */
+    public boolean removeFan(MUser user) {
+        if (user == null || user.getId() == null) {
+            return false;
+        }
+        return fans.removeIf(u -> u.getId().equals(user.getId()));
+    }
 
+    /**
+     * 检查是否关注了指定用户
+     */
+    public boolean isFollowing(MUser user) {
+        if (user == null || user.getId() == null || follows == null) {
+            return false;
+        }
+        return follows.stream().anyMatch(u -> u.getId().equals(user.getId()));
+    }
+
+    /**
+     * 检查是否被指定用户关注
+     */
+    public boolean isFollowedBy(MUser user) {
+        if (user == null || user.getId() == null || fans == null) {
+            return false;
+        }
+        return fans.stream().anyMatch(u -> u.getId().equals(user.getId()));
+    }
+
+    /**
+     * 增加微博数量
+     */
+    public void incrementTwiSize() {
+        this.twiSize = getTwiSize() + 1;
+    }
+
+    /**
+     * 减少微博数量
+     */
+    public void decrementTwiSize() {
+        int currentSize = getTwiSize();
+        if (currentSize > 0) {
+            this.twiSize = currentSize - 1;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
+
+        MUser other = (MUser) obj;
+
+        if (userName != null ? !userName.equals(other.userName) : other.userName != null) return false;
+        if (nickName != null ? !nickName.equals(other.nickName) : other.nickName != null) return false;
+        if (validationEmail != null ? !validationEmail.equals(other.validationEmail) : other.validationEmail != null)
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (nickName != null ? nickName.hashCode() : 0);
+        result = 31 * result + (validationEmail != null ? validationEmail.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MUser{" +
+                "id='" + getId() + '\'' +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", validationEmail='" + validationEmail + '\'' +
+                ", followsSize=" + getFollowsSize() +
+                ", fansSize=" + getFansSize() +
+                ", twiSize=" + getTwiSize() +
+                '}';
+    }
 }

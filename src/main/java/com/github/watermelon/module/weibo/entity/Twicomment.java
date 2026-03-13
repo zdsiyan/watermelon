@@ -1,7 +1,7 @@
 package com.github.watermelon.module.weibo.entity;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Reference;
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Reference;
 
 import com.github.watermelon.core.entity.BaseEntity;
 import com.github.watermelon.module.common.entity.MUser;

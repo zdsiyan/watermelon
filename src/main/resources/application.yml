@@ -1,0 +1,157 @@
+# Spring Boot 应用配置
+spring:
+  # 应用名称
+  application:
+    name: watermelon
+
+  # MongoDB 配置
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/watermelon
+      auto-index-creation: true
+
+  # FreeMarker 模板配置
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .html
+    charset: UTF-8
+    cache: false
+    settings:
+      template_update_delay: 18000
+      locale: zh_CN
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      date_format: yyyy-MM-dd
+      time_format: HH:mm:ss
+      number_format: 0.##
+
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      file-size-threshold: 0
+
+  # 安全配置
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
+
+  # 开发工具配置
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  # 日志配置
+  logging:
+    level:
+      com.github.watermelon: DEBUG
+      org.springframework.data.mongodb.core: DEBUG
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file:
+      name: logs/watermelon.log
+
+# 服务器配置
+server:
+  port: 8181
+  servlet:
+    context-path: /
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        secure: false
+  tomcat:
+    max-connections: 10000
+    max-threads: 200
+    min-spare-threads: 10
+    connection-timeout: 5000
+
+# Spring Boot Actuator 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+    metrics:
+      enabled: true
+  info:
+    env:
+      enabled: true
+
+# 应用自定义配置
+watermelon:
+  # 密码加密算法
+  security:
+    password-encoder: bcrypt
+    token-expiration: 86400 # 24小时
+
+  # 文件上传配置
+  upload:
+    max-size: 104857600 # 100MB
+    allowed-extensions: jpg,jpeg,png,gif,pdf,doc,docx
+
+  # 业务配置
+  user:
+    default-avatar: /static/images/default-avatar.png
+    max-follows: 1000
+
+  # 微博配置
+  weibo:
+    max-content-length: 280
+    max-images: 9
+    max-comments: 1000
+
+# 多环境配置
+---
+# 开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/watermelon_dev
+  logging:
+    level:
+      com.github.watermelon: DEBUG
+      org.springframework: INFO
+
+---
+# 生产环境
+spring:
+  config:
+    activate:
+      on-profile: prod
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/watermelon}
+  logging:
+    level:
+      com.github.watermelon: WARN
+      org.springframework: WARN
+  freemarker:
+    cache: true
+  devtools:
+    restart:
+      enabled: false
+
+server:
+  port: ${PORT:8181}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

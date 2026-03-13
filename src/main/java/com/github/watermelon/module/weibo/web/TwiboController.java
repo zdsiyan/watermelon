@@ -1,10 +1,11 @@
 package com.github.watermelon.module.weibo.web;
 
 import java.util.List;
+import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,10 @@ import com.github.watermelon.module.weibo.entity.Twibo;
 import com.github.watermelon.module.weibo.entity.Twicomment;
 import com.github.watermelon.module.weibo.service.TwiboService;
 
+@Slf4j
 @Controller
 @RequestMapping("/twibo")
 public class TwiboController {
-	/**
-	 * logger.
-	 */
-	private Logger logger=Logger.getLogger(getClass());
 	
 	@Autowired
 	private TwiboService twiboService;
@@ -51,7 +49,7 @@ public class TwiboController {
 		try{
 			result = twiboService.postTwibo(content, user);
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		if(result!=null){
 			return new ResultVO<Twibo>(SysDefinition.CODE_SUCCESS,null,result);
@@ -78,7 +76,7 @@ public class TwiboController {
 		try{
 			result = twiboService.postComment(tid, user, content);
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		if(result!=null){
 			return new ResultVO<Twicomment>(SysDefinition.CODE_SUCCESS,null,result);
@@ -102,7 +100,7 @@ public class TwiboController {
 			//TODO:未分页
 			result = twiboService.getComments(tid, offset, length);
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		if(result!=null){
 			return new ResultVO<List<Twicomment>>(SysDefinition.CODE_SUCCESS,null,result);
@@ -129,7 +127,7 @@ public class TwiboController {
 		try{
 			result = twiboService.getList(user, offset, length);
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		if(result!=null){
 			return new ResultVO<List<Twibo>>(SysDefinition.CODE_SUCCESS,null,result);
@@ -148,12 +146,12 @@ public class TwiboController {
 	public ModelAndView follow(HttpSession session, @PathVariable String oid){
 		ModelAndView view = new ModelAndView("/follow");
 		try{
-			MUser muser= mUserService.get(new ObjectId(oid));
-			if(muser!=null){
-				view.addObject("follows",muser.getFollows());
+			Optional<MUser> muserOpt = mUserService.findById(oid);
+			if(muserOpt.isPresent()){
+				view.addObject("follows",muserOpt.get().getFollows());
 			}
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		return view;
 	}
@@ -168,12 +166,12 @@ public class TwiboController {
 	public ModelAndView fans(HttpSession session, @PathVariable String oid){
 		ModelAndView view = new ModelAndView("/fans");
 		try{
-			MUser muser= mUserService.get(new ObjectId(oid));
-			if(muser!=null){
-				view.addObject("fans",muser.getFans());
+			Optional<MUser> muserOpt = mUserService.findById(oid);
+			if(muserOpt.isPresent()){
+				view.addObject("fans",muserOpt.get().getFans());
 			}
 		}catch(Exception e){
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		return view;
 	}
@@ -181,16 +179,16 @@ public class TwiboController {
 	@ResponseBody
 	@RequestMapping(value="/get")
 	public ResultVO<Twibo> get(String oid){
-		Twibo result = null;
 		try{
-			result = twiboService.get(new ObjectId(oid));
+			Optional<Twibo> resultOpt = twiboService.getTwiboById(oid);
+			if(resultOpt.isPresent()){
+				return new ResultVO<Twibo>(SysDefinition.CODE_SUCCESS,null,resultOpt.get());
+			}else{
+				return new ResultVO<Twibo>(SysDefinition.CODE_NODATA,null,null);
+			}
 		}catch(Exception e){
-			logger.error(e.getMessage());
-		}
-		if(result!=null){
-			return new ResultVO<Twibo>(SysDefinition.CODE_SUCCESS,null,result);
-		}else{
-			return new ResultVO<Twibo>(SysDefinition.CODE_NODATA,null,null);
+			log.error(e.getMessage());
+			return new ResultVO<Twibo>(SysDefinition.CODE_ERROR,null,null);
 		}
 	}
 
